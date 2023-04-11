@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#PBS -M ylh.icandoit@gmail.com
+#PBS -N Bru_12to24_exp2_train
+#PBS -l walltime=20:00:00
+#PBS -d .
+#PBS -j oe
+#PBS -l nodes=1:ppn=1:gpus=1
+#PBS -l mem=32gb
+#PBS -m bea
+#PBS -r n  
+#PBS -o ../out/Bru_12to24_exp2_train
+#PBS -e ../out/Bru_12to24_exp2_train_err
+
+cd /misc/raid/home/yhe/DeepLearning/dMRI_gan/
+source activate pytorch
+
+which python
+
+python train.py --dataroot ./datasets/map_12to24_Bru --name Bru_12to24_exp2 --model dmri_tdm --netG unet_128 --direction AtoB --dataset_mode simrealdeconv --norm batch --direction AtoB --input_nc 13 --output_nc 24 --lambda_G_GAN 1 --lambda_G_sim 0.005 --lambda_G_const 0 --sim_loss mse
